@@ -1,0 +1,35 @@
+#!/bin/bash
+
+_venvwrapper_completions () {
+    local cur prev opts venvs
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="-o --open -r --remove -c --create -l --list -i --info -h --help -v --version"
+    venvs=$(ls ~/.venv)
+
+    if [[ ! ${COMP_CWORD} -eq 3 ]] ; then
+        case ${prev} in
+        --help | -h)
+            ;;
+        --create | -c)
+            ;;
+        --list | -l)
+            ;;
+        --open | -o)
+            COMPREPLY=( $(compgen -W "${venvs}" -- ${cur}) )
+            ;;
+        --remove | -r)
+            COMPREPLY=( $(compgen -W "${venvs}" -- ${cur}) )
+            ;;
+        --info | -i)
+            COMPREPLY=( $(compgen -W "${venvs}" -- ${cur}) )
+            ;;
+        *)
+            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        esac
+    fi
+    
+}
+
+complete -F _venvwrapper_completions venvwrapper
