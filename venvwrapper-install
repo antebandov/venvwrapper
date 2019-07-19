@@ -1,0 +1,46 @@
+#!/bin/bash
+
+SCRIPT=`realpath $0`
+SCRIPTPATH=`dirname $SCRIPT`/venvwrapper
+STRING="alias venvwrapper="
+FILE="~/.bash_aliases"
+
+
+if (( $EUID != 0 )); then
+    if grep -Fwq "$STRING" ~/.bash_aliases ; then
+        echo "venvwrapper was already installed into ~/.bash_aliases"
+    else
+        echo "alias venvwrapper=\"source $SCRIPTPATH\"" >> ~/.bash_aliases
+        echo "venvwrapper was successfully installed into ~/.bash_aliases"
+    fi
+    
+    if [ ! -f ~/.bash_completion ]; then
+    read -p "There is no local ~/.bash_completion file. Would you like to create one (y/n)?: " choice
+    case "$choice" in 
+        y|Y )
+            echo -e "#!/bin/bash\n\nfiles=~/.local/share/bash-completion/*\nfor f in \$files\ndo\nsource \$f\ndone" >> ~/.bash_completion
+            if [ ! -d ~/.local/share/bash-completion ]; then
+                mkdir ~/.local/share/bash-completion
+            fi
+            install -v venvwrapper-completion -t ~/.local/share/bash-completion
+            exit
+            ;;
+        n|N )
+            exit
+            ;;
+        * )
+            echo "invalid"
+            exit
+            ;;
+    esac
+    else
+        if [ ! -d ~/.local/share/bash-completion ]; then
+                mkdir ~/.local/share/bash-completion
+                echo -e "#!/bin/bash\n\nfiles=~/.local/share/bash-completion/*\nfor f in $files\ndo\nsource $f\ndone" >> ~/.bash_completion
+        fi
+        install -v venvwrapper-completion -t ~/.local/share/bash-completion
+        exit
+    fi
+else
+    echo "Please don't run as root"
+fi
