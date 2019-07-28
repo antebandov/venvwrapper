@@ -6,7 +6,9 @@ _venvwrapper_completions () {
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     opts="-o --open -r --remove -c --create -l --list -i --info -h --help -v --version"
-    venvs=$(ls ~/.venv)
+    if [ -d ~/.venv ]; then
+        venvs=$(ls ~/.venv)
+    fi
 
     if [[ ! ${COMP_CWORD} -eq 3 ]] ; then
         case ${prev} in

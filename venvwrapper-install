@@ -7,8 +7,13 @@ FILE="~/.bash_aliases"
 
 
 if (( $EUID != 0 )); then
-    if grep -Fwq "$STRING" ~/.bash_aliases ; then
-        echo "venvwrapper was already installed into ~/.bash_aliases"
+    if [ -f ~/.bash_aliases ]; then
+        if grep -Fwq "$STRING" ~/.bash_aliases ; then
+            echo "venvwrapper was already installed into ~/.bash_aliases"
+        else
+            echo "alias venvwrapper=\"source $SCRIPTPATH\"" >> ~/.bash_aliases
+            echo "venvwrapper was successfully installed into ~/.bash_aliases"
+        fi
     else
         echo "alias venvwrapper=\"source $SCRIPTPATH\"" >> ~/.bash_aliases
         echo "venvwrapper was successfully installed into ~/.bash_aliases"
