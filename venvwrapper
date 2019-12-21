@@ -1,6 +1,7 @@
 #!/bin/bash
 
 currentDir=$PWD
+PYTHON=${PYTHON:=python3}
 
 helpmenu () {
 	echo -e "\nVerwendung:  venvwrapper <Operation> [...]\nOperationen:
@@ -30,11 +31,11 @@ create () {
 	cd
 	if [ -d .venv ]; then
 		cd .venv
-		python -m venv $1
+		$PYTHON -m venv $1
 		echo "The virtual enviroment $1 was created successfully!"
 	else
 		mkdir .venv
-		python -m venv $1
+		$PYTHON -m venv $1
 		echo "The virtual enviroment $1 was created successfully!"
 	fi
 	open $1
