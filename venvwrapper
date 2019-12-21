@@ -4,9 +4,9 @@ currentDir=$PWD
 PYTHON=${PYTHON:=python3}
 
 helpmenu () {
-	echo -e "\nVerwendung:  venvwrapper <Operation> [...]\nOperationen:
+	echo -e "\nUsage:  venvwrapper <operation> [...]\noperations:
     venvwrapper {-c --create}   <venv>
-	venvwrapper {-i --info} 	<venv>
+    venvwrapper {-i --info} 	<venv>
     venvwrapper {-r --remove}   <venv>
     venvwrapper {-l --list}
     venvwrapper {-h --help}
